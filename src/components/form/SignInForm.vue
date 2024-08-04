@@ -21,8 +21,6 @@
       />
       <UIButton class="sign-in-form__action-btn" label="submit" @click="submit" />
     </div>
-    <!-- <div class="sign-in-form__action"> -->
-    <!-- </div> -->
   </div>
 </template>
 
@@ -31,7 +29,7 @@ import { defineComponent } from "vue";
 import UIInput from "../ui/input/UIInput.vue";
 import UIButton from "../ui/button/UIButton.vue";
 import { useVuelidate } from "@vuelidate/core";
-import { required, numeric } from "@vuelidate/validators";
+import { required, numeric, helpers } from "@vuelidate/validators";
 
 export default defineComponent({
   name: "SignInForm",
@@ -53,6 +51,10 @@ export default defineComponent({
         username: { required },
         // phone: { required, numeric },
         phone: { required },
+        // phone: { 
+        //   required, 
+        //   pattern: helpers.regex('phone', /^[0-9()\- ]+$/)
+        //  },
       },
     };
   },
