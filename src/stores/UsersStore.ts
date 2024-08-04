@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { users } from '../services'
-import { ApiUser } from "../services/users.service";
+import { User } from '../application/services/user.service'
+import { userService } from '../application'
 
 
 interface UserPage  {
-  users: Array<ApiUser>
-  usersByKey: Record<string, ApiUser>
+  users: Array<User>
+  total: number
+  pages: number
 }
 
 
@@ -13,21 +14,18 @@ export const useUsersStore = defineStore('usersStore', {
   state: (): UserPage => {
     return {
       users: [],
-      usersByKey: {}
+      total: 0,
+      pages: 1
     }
   },
   actions: {
     getUsers() {
-      users.getUsers().then(users => {
-        users.forEach(this.setUsers)
-        this.users = users
+      userService.getAll().then(({data, total, pages}) => {
+        this.users = data
+        this.total = total
+        this.pages = pages
       })
 
-    },
-    setUsers(user: ApiUser) {
-      const {username, phone}: {username: string, phone: string} = user
-      const key = `${username}:${phone}`
-      this.usersByKey[key] = user
     }
   },
 })
