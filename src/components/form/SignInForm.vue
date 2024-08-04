@@ -43,15 +43,16 @@ export default defineComponent({
   setup: () => ({ v$: useVuelidate() }),
   data: () => ({
     form: {
-      username: "",
-      phone: "",
+      username: "Bret",
+      phone: "1-770-736-8031 x56442",
     },
   }),
   validations() {
     return {
       form: {
         username: { required },
-        phone: { required, numeric },
+        // phone: { required, numeric },
+        phone: { required },
       },
     };
   },

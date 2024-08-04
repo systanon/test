@@ -1,11 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { todos } from '../services'
-import { ApiTodo } from "../services/todo.service";
 import UICheckBox  from "../components/ui/checkbox/UICheckBox.vue"
+import { todoService } from "../application";
+import { Todo } from "../application/services/todo.service";
 
 type TodosPage = {
-  todos: Array<ApiTodo>
+  todos: Array<Todo>
 }
 
 export default defineComponent({
@@ -17,7 +17,7 @@ export default defineComponent({
     todos: []
   }),
   mounted() {
-    todos.geTodos().then(todos => this.todos = todos)
+    todoService.getAll().then(({data}) => this.todos = data)
   },
   methods: {
     changeHandler (checked: boolean, id: number, userId: number) {

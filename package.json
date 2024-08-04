@@ -8,15 +8,20 @@
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview"
   },
+  "engines": {
+    "node": "^22"
+  },
   "dependencies": {
     "@vuelidate/core": "^2.0.3",
     "@vuelidate/validators": "^2.0.4",
+    "qs": "^6.13.0",
     "sass": "^1.77.8",
     "sass-loader": "^16.0.0",
     "vue": "^3.4.31",
     "vue-router": "^4.4.2"
   },
   "devDependencies": {
+    "@types/qs": "^6.9.15",
     "@vitejs/plugin-vue": "^5.0.5",
     "typescript": "^5.2.2",
     "vite": "^5.3.4",

@@ -1,11 +1,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { posts } from '../services'
-import { ApiPost } from "../services/post.service";
+import { postService } from '../application/index'
 import UICheckBox  from "../components/ui/checkbox/UICheckBox.vue"
+import { Post } from "../application/services/post.service";
 
 type PostsPage = {
-  posts: Array<ApiPost>
+  posts: Array<Post>
 }
 
 export default defineComponent({
@@ -17,14 +17,14 @@ export default defineComponent({
     posts: []
   }),
   mounted() {
-    posts.getPosts().then(posts => this.posts = posts)
+    postService.getAll().then(({data}) => this.posts = data)
   },
 })
 </script>
 
 <template>
   <div class="posts">
-    <div class="posts-page" v-for="{title, id, userId,} of posts" :key="id">
+    <div class="posts-page" v-for="{title, id, userId} of posts" :key="id">
       <p>{{ title }}</p>
     </div>   
   </div>

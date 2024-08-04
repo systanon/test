@@ -1,10 +1,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { users } from '../services'
-import { ApiUser } from "../services/users.service";
+import { userService } from "../application";
+import { User } from "../application/services/user.service";
 
 type UserPage = {
-  users: Array<ApiUser>
+  users: Array<User>
 }
 
 export default defineComponent({
@@ -14,7 +14,7 @@ export default defineComponent({
   }),
 
   mounted() {
-    users.getUsers().then(users => this.users = users)
+    userService.getAll().then(({data}) => this.users = data)
   }
 })
 </script>
