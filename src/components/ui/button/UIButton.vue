@@ -1,15 +1,6 @@
 <template>
-  <button
-    :disabled="disabled"
-    :class="['ui-button', `_${variant}`, `_${size}`]"
-  >
-    <slot name="prepend"></slot>
-    <span class="ui-button__content">
-      <slot name="default">
-        {{ label }}
-      </slot>
-    </span>
-    <slot name="append"></slot>
+  <button class="ui-button">
+    {{ label }}
   </button>
 </template>
 
@@ -23,14 +14,6 @@ export default defineComponent({
       type: String,
       default: "",
     },
-    disabled: {
-      type: Boolean,
-      default: false,
-    },
-    block: {
-      type: Boolean,
-      default: false,
-    },
   },
 });
 </script>
@@ -38,18 +21,13 @@ export default defineComponent({
 <style  scoped>
 .ui-button {
   /* @include head-6; */
-  background: var(--bg-btn-primary);
+  /* background: var(--bg-btn-primary); */
   border: none;
-  color: var(--text-color-tertiary);
+  /* color: var(--text-color-tertiary); */
   text-align: center;
   cursor: pointer;
-  border-radius: var(--border-radius-sm);
+  /* border-radius: var(--border-radius-sm); */
   position: relative;
   overflow: hidden;
-
-  /* &:disabled {
-    opacity: $disabled-opacity;
-    pointer-events: none;
-  } */
 }
 </style>
