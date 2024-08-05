@@ -1,19 +1,22 @@
 import { defineStore } from 'pinia'
 import { User } from '../application/services/user.service'
 import { userService } from '../application'
+import { ID } from '../application/types'
 
 
-interface UserPage  {
-  users: Array<User>
+type UserStore  = {
+  list: Array<User>
+  index: Map<ID, User>
   total: number
   pages: number
 }
 
 
 export const useUsersStore = defineStore('usersStore', {
-  state: (): UserPage => {
+  state: (): UserStore => {
     return {
-      users: [],
+      list: [],
+      index: new Map(),
       total: 0,
       pages: 1
     }
@@ -21,11 +24,11 @@ export const useUsersStore = defineStore('usersStore', {
   actions: {
     getUsers() {
       userService.getAll().then(({data, total, pages}) => {
-        this.users = data
+        this.list = data
+        data.forEach(user => this.index.set(user.id, user))
         this.total = total
         this.pages = pages
       })
-
     }
   },
 })

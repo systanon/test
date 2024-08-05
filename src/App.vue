@@ -1,14 +1,14 @@
 <script lang="ts">
 import { mapActions } from "pinia";
 import { defineComponent } from "vue";
-import { useUsersStore } from "./stores/UsersStore";
+import { useTodosStore } from "./stores/todo.store";
 
 export default defineComponent({
   methods: {
-    ...mapActions(useUsersStore, ["getUsers"]),
+    ...mapActions(useTodosStore, ["restoreFavorite"]),
   },
   created() {
-    this.getUsers();
+    this.restoreFavorite()
   },
 });
 </script>

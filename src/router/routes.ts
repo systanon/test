@@ -9,19 +9,19 @@ const routes: Array<RouteRecordRaw> = [
   //   meta: { accessMode: "public" },
   //   component: PageHome,
   // },
-  {
-    path: "/",
-    name: "UsersPage",
-    meta: { accessMode: "public" },
-    component: UsersPage,
-  },
   // {
   //   path: "/",
-  //   name: "TodosPage",
+  //   name: "UsersPage",
   //   meta: { accessMode: "public" },
-  //   children: [],
-  //   component: () =>  import("../views/TodosPage.vue"),
+  //   component: UsersPage,
   // },
+  {
+    path: "/todos/:userId",
+    name: "TodosPage",
+    meta: { accessMode: "public" },
+    children: [],
+    component: () =>  import("../views/TodosPage.vue"),
+  },
   // {
   //   path: "/",
   //   name: "PostsPage",
@@ -29,12 +29,12 @@ const routes: Array<RouteRecordRaw> = [
   //   children: [],
   //   component: () =>  import("../views/PostsPage.vue"),
   // },
-  // {
-  //   path: "/",
-  //   name: "SignInForm",
-  //   meta: { accessMode: "public" },
-  //   component: () =>  import("../views/SignInPage.vue"),
-  // },
+  {
+    path: "/",
+    name: "SignInForm",
+    meta: { accessMode: "public" },
+    component: () =>  import("../views/SignInPage.vue"),
+  },
   // {
   //   path: "/profile",
   //   name: "Profile",
