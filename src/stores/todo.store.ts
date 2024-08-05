@@ -13,7 +13,7 @@ type TodoStore = {
   favorites: Set<ID>;
 };
 
-type TodoAggregated = Todo & { user: User | null; favorite: boolean };
+export type TodoAggregated = Todo & { user: User | null; favorite: boolean };
 
 const STORAGE_KEY = "todo-favorites";
 
@@ -36,6 +36,7 @@ export const useTodosStore = defineStore("TodosStore", {
         favorite: this.favorites.has(todo.id),
       }));
     },
+     
   },
   actions: {
     getTodos() {
