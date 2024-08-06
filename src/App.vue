@@ -2,13 +2,18 @@
 import { mapActions } from "pinia";
 import { defineComponent } from "vue";
 import { useTodosStore } from "./stores/todo.store";
+import { useUsersStore } from "./stores/user.store";
 
 export default defineComponent({
-  methods: {
-    ...mapActions(useTodosStore, ["restoreFavorite"]),
+   setup() {
+    const usersStore = useUsersStore();
+    const todosStore = useTodosStore();
+
+    return { usersStore, todosStore };
   },
   created() {
-    this.restoreFavorite()
+    this.todosStore.restoreFavorite()
+    this.usersStore.getUsers()
   },
 });
 </script>

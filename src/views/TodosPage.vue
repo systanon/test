@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { TodoAggregated, useTodosStore } from "../stores/todo.store";
-import UISelect from "../components/select/UISelect.vue";
+import UISelect from "../components/ui/select/UISelect.vue";
 import { Option } from "../application/types";
 import UIButton from "../components/ui/button/UIButton.vue";
 import UICheckBox from "../components/ui/checkbox/UICheckBox.vue";
@@ -82,6 +82,9 @@ export default defineComponent({
         this.todoStore.deleteFavorite(id);
       }
     },
+    goTo() {
+      this.$router.push({ name: "CreateTodoPage"});
+    }
   },
 });
 </script>
@@ -109,6 +112,7 @@ export default defineComponent({
           label="Title"
           class="todos-filter__title"
         />
+         <UIButton label="Create todo" @click="goTo" />
       </div>
       <div class="todos-page__list todo-list">
         <div
@@ -145,7 +149,6 @@ export default defineComponent({
   height: 100%;
   gap: 10px;
   padding: 4rem 2rem;
-  border: 1px solid green;
 }
 .todos-page__header {
   width: 100%;
@@ -159,7 +162,7 @@ export default defineComponent({
 .todos-filter {
   padding-bottom: 25px;
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr;
   gap: 1rem;
 }
 
@@ -169,6 +172,8 @@ export default defineComponent({
   gap: 2rem;
 }
 .todo-list__item {
+    border: 1px solid green;
+    padding: 10px;
   
 }
 .todo {

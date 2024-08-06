@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { ID } from '../application/types';
-import { Todo, UpdateTodoDto } from '../application/services/todo.service';
+import { CreateTodoDto, Todo, UpdateTodoDto } from '../application/services/todo.service';
 import { todoService } from '../application';
 import { useUsersStore } from './user.store';
 import { User } from '../application/services/user.service';
@@ -60,6 +60,16 @@ export const useTodosStore = defineStore('TodosStore', {
           todo && Object.assign(todo, dto)
 
         })
+    },
+    createTodo(dto: CreateTodoDto) {
+      todoService
+      .create(dto)
+      .then((id) => {
+        const todo: Todo = {...dto, id: Date.now(), completed: false}
+        this.list.push(todo)
+        this.index.set(todo.id, todo)
+
+      })
     },
     addFavorite(id: ID) {
       this.favorites.add(id);
