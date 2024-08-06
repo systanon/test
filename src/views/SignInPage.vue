@@ -1,5 +1,7 @@
 <template>
+<div class="sign-in">
   <SignInForm @submit="submit" />
+</div>
 </template>
 
 <script lang="ts">
@@ -26,3 +28,12 @@ export default defineComponent({
   },
 });
 </script>
+<style scoped>
+.sign-in {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+</style>

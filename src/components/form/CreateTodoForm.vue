@@ -2,22 +2,25 @@
   <div class="create-todo__form">
     <h2 class="create-todo__form-title">Description</h2>
     <div class="create-todo__form-body">
-    <p class="create-todo__form-subtitle">Description</p>
-    <UISelect
-      v-model="form.userId"
-      :options="options"
-      class="create-todo__form-options"
-    />
-    <UIInput
-      type="text"
-      name="title"
-      v-model:value="form.title"
-      label="title"
-      :validator="v$.form.title"
-      class="create-todo__form-title"
-    />
-    <UIButton class="create-todo__form-submit" label="submit" @click="submit" />
-
+      <p class="create-todo__form-subtitle">Description</p>
+      <UISelect
+        v-model="form.userId"
+        :options="options"
+        class="create-todo__form-options"
+      />
+      <UIInput
+        type="text"
+        name="title"
+        v-model:value="form.title"
+        label="title"
+        :validator="v$.form.title"
+        class="create-todo__form-title"
+      />
+      <UIButton
+        class="create-todo__form-submit"
+        label="submit"
+        @click="submit"
+      />
     </div>
   </div>
 </template>
@@ -48,7 +51,7 @@ export default defineComponent({
   data: () => ({
     form: {
       userId: 0,
-      title: ""
+      title: "",
     },
   }),
   validations() {
@@ -78,7 +81,7 @@ export default defineComponent({
 }
 .create-todo__form-title {
   padding: 15px 0;
-  background-color: #A5A5A5;
+  background-color: #a5a5a5;
 }
 .create-todo__form-body {
   display: grid;
@@ -91,9 +94,7 @@ export default defineComponent({
 ::v-deep.ui-select {
   height: 41px;
 }
-.sign-form__input {
-  background-color: white;
-}
+
 .create-todo__form-submit {
   background-color: #519945;
 }

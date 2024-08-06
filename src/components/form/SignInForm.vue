@@ -1,15 +1,15 @@
 <template>
-  <div class="sign-in-form">
-    <h2 class="sign-in-form__title"> Description </h2>
-    <div class="sign-in-form__inputs">
-      <p> Description </p>
+  <div class="sign-in__form">
+    <h2 class="sign-in__form-title">Description</h2>
+    <div class="sign-in__form-body">
+      <p class="sign-in__form-subtitle">Description</p>
       <UIInput
         type="text"
         name="username"
         v-model:value="form.username"
         label="User name"
         :validator="v$.form.username"
-        class="sign-in-form__input"
+        class="sign-in__form-username"
       />
       <UIInput
         type="text"
@@ -17,9 +17,9 @@
         v-model:value="form.phone"
         label="phone"
         :validator="v$.form.phone"
-        class="sign-in-form__input"
+        class="sign-in__form-phone"
       />
-      <UIButton class="sign-in-form__action-btn" label="submit" @click="submit" />
+      <UIButton class="sign-in__form-submit" label="submit" @click="submit" />
     </div>
   </div>
 </template>
@@ -29,7 +29,10 @@ import { defineComponent } from "vue";
 import UIInput from "../ui/input/UIInput.vue";
 import UIButton from "../ui/button/UIButton.vue";
 import { useVuelidate } from "@vuelidate/core";
-import { required, numeric, helpers } from "@vuelidate/validators";
+import { required } from "@vuelidate/validators";
+
+const PHONE_MATCH = (val) => val.match(/^(\+?\d{1,3})?[-.\s]?(\(\d{1,4}\)|\d{1,4})?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/);
+const NAME_MATCH = (val) => val.match(/^[a-zA-Z]+$/)
 
 export default defineComponent({
   name: "SignInForm",
@@ -41,20 +44,17 @@ export default defineComponent({
   setup: () => ({ v$: useVuelidate() }),
   data: () => ({
     form: {
-      username: "Bret",
-      phone: "1-770-736-8031 x56442",
+      username: "Samantha",
+      phone: "1-463-123-4447",
     },
   }),
   validations() {
     return {
       form: {
-        username: { required },
-        // phone: { required, numeric },
-        phone: { required },
-        // phone: { 
-        //   required, 
-        //   pattern: helpers.regex('phone', /^[0-9()\- ]+$/)
-        //  },
+        username: { required, NAME_MATCH },
+        phone: {
+          required, PHONE_MATCH
+         },
       },
     };
   },
@@ -69,36 +69,26 @@ export default defineComponent({
 </script>
 
 <style scoped >
-.sign-in-form {
+.sign-in__form {
   width: 447px;
   height: 299px;
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  align-items: center;
-  background: #C3C3C3;
+  grid-auto-rows: max-content auto;
+  display: grid;
+  background: #c3c3c3;
 }
-.sign-in-form__title {
-  width: 100%;
+.sign-in__form-title {
   padding: 15px 0;
-  background-color: #A5A5A5;
+  background-color: #a5a5a5;
 }
-.sign-in-form__inputs {
-  text-align: left;
-  width: 100%;
+.sign-in__form-body {
+  display: grid;
+  padding: 0 25px 50px 25px;
+}
+.sign-in__form-subtitle {
   display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 1rem;
+  align-items: center;
 }
-.sign-form__input {
-  height: 41px;
-  background-color: white;
-}
-.sign-in-form__action-btn {
-  margin-top: 15px;
-  width: 100%;
+.sign-in__form-submit {
   background-color: #519945;
-  height: 35px;
 }
 </style>
