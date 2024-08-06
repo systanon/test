@@ -73,7 +73,7 @@ export default defineComponent({
   },
   methods: {
     changeHandler(checked: boolean, id: number, userId: number) {
-      console.log(checked, id, userId);
+      this.todoStore.updateTodo(id, { completed: checked });
     },
     favoriteHandler(favorite: boolean, id: number) {
       if (favorite) {
@@ -87,68 +87,96 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="todos-header">
-    <UISelect v-model="filter.option" :options="OPTIONS" />
-    <UIInput
-      type="text"
-      name="username"
-      v-model:value="filter.username"
-      label="User name"
-      class="sign-in-form__input"
-    />
-    <UIInput
-      type="text"
-      name="username"
-      v-model:value="filter.title"
-      label="Title"
-      class="sign-in-form__input"
-    />
-  </div>
-  <div class="todos">
-    <div
-      class="todos-page"
-      v-for="{ title, completed, id, userId, user, favorite } of todos"
-      :key="id"
-    >
-      <p>{{ title }}</p>
-      <div class="todos-page__checked">
-        <p>Completed</p>
-        <UICheckBox
-          :modelValue="completed"
-          @update:modelValue="($event) => changeHandler($event, id, userId)"
+  <div class="todos-page">
+    <div class="_content">
+      <div class="todos-page__header todos-filter">
+        <UISelect
+          v-model="filter.option"
+          :options="OPTIONS"
+          class="todos-filter__options"
+        />
+        <UIInput
+          type="text"
+          name="username"
+          v-model:value="filter.username"
+          label="User name"
+          class="todos-filter__name"
+        />
+        <UIInput
+          type="text"
+          name="username"
+          v-model:value="filter.title"
+          label="Title"
+          class="todos-filter__title"
         />
       </div>
-      <div class="todos-page__checked">
-        <p>Favorite</p>
-        <UICheckBox
-          :modelValue="favorite"
-          @update:modelValue="($event) => favoriteHandler($event, id)"
-        />
+      <div class="todos-page__list todo-list">
+        <div
+          class="todo-list__item todo"
+          v-for="{ title, completed, id, userId, user, favorite } of todos"
+          :key="id"
+        >
+          <p class="todo__title">{{ title }}</p>
+          <div class="todo__completed">
+            <p>Completed</p>
+            <UICheckBox
+              :modelValue="completed"
+              @update:modelValue="($event) => changeHandler($event, id, userId)"
+            />
+          </div>
+          <div class="todo__favorite">
+            <p>Favorite</p>
+            <UICheckBox
+              :modelValue="favorite"
+              @update:modelValue="($event) => favoriteHandler($event, id)"
+            />
+          </div>
+          <p class="todo__username">{{ user?.username }}</p>
+        </div>
       </div>
-      <p>{{ user?.username }}</p>
     </div>
   </div>
 </template>
 
 <style scoped>
-.todos-header {
+.todos-page {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 10px;
+  padding: 4rem 2rem;
+  border: 1px solid green;
+}
+.todos-page__header {
+  width: 100%;
+  flex: 0 0;
+}
+.todos-page__list {
+  width: 100%;
+  flex: 1 1;
+}
+
+.todos-filter {
   padding-bottom: 25px;
   display: grid;
   grid-template-columns: 0.5fr 0.5fr 0.5fr;
   gap: 1rem;
 }
-.todos {
+
+.todo-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+.todo-list__item {
+  
+}
+.todo {
+  display: grid;
   gap: 1rem;
 }
-.todos-page {
-  display: grid;
-  gap: 10px;
-  padding: 10px;
-  border: 1px solid green;
-}
-.todos-page__checked {
+
+.todo__completed, .todo__favorite {
   display: flex;
   justify-content: end;
   gap: 20px;

@@ -45,25 +45,25 @@ export class UserService {
   }
 
   async getAll({ offset = OFFSET, limit = LIMIT }: GetAllParams = <GetAllParams>{}): Promise<Pagination<User>> {
-    var url = '/users' + '?' + qs.stringify({ offset, limit })
+    const url = '/users' + '?' + qs.stringify({ offset, limit })
     const response = await this.client.jsonDo<Array<User>>(url)
     return getPaginationFromResponse(response, limit)
   }
 
   async getOne(id: ID): Promise<User> {
-    var url = '/users/' + id
+    const url = '/users/' + id
     const response = await this.client.jsonDo<User>(url)
     return response.body
   }
 
   async create(dto: CreateUserDto): Promise<ID> {
-    var url = '/users'
+    const url = '/users'
     const response = await this.client.jsonDo<User>(url, { method: 'POST', body: dto })
     return response.body.id
   }
 
   async update(dto: UpdateUserDto): Promise<ID> {
-    var url = '/users'
+    const url = '/users'
     const response = await this.client.jsonDo<User>(url, { method: 'PATCH', body: dto })
     return response.body.id
   }

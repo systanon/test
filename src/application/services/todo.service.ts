@@ -28,25 +28,25 @@ export class TodoService {
   }
 
   async getAll({ offset = OFFSET, limit = LIMIT }: GetAllParams = <GetAllParams>{}): Promise<Pagination<Todo>> {
-    var url = '/todos' + '?' + qs.stringify({ offset, limit })
+    const url = '/todos' + '?' + qs.stringify({ offset, limit })
     const response = await this.client.jsonDo<Array<Todo>>(url)
     return getPaginationFromResponse(response, limit)
   }
 
   async getOne(id: ID): Promise<Todo> {
-    var url = '/todos/' + id
+    const url = '/todos/' + id
     const response = await this.client.jsonDo<Todo>(url)
     return response.body
   }
 
   async create(dto: CreateTodoDto): Promise<ID> {
-    var url = '/todos'
+    const url = '/todos'
     const response = await this.client.jsonDo<Todo>(url, { method: 'POST', body: dto })
     return response.body.id
   }
 
-  async update(dto: UpdateTodoDto): Promise<ID> {
-    var url = '/todos'
+  async update(id: ID, dto: UpdateTodoDto): Promise<ID> {
+    const url = '/todos/' + id
     const response = await this.client.jsonDo<Todo>(url, { method: 'PATCH', body: dto })
     return response.body.id
   }

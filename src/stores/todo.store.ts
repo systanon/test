@@ -1,9 +1,9 @@
-import { defineStore } from "pinia";
-import { ID } from "../application/types";
-import { Todo } from "../application/services/todo.service";
-import { todoService } from "../application";
-import { useUsersStore } from "./user.store";
-import { User } from "../application/services/user.service";
+import { defineStore } from 'pinia';
+import { ID } from '../application/types';
+import { Todo, UpdateTodoDto } from '../application/services/todo.service';
+import { todoService } from '../application';
+import { useUsersStore } from './user.store';
+import { User } from '../application/services/user.service';
 
 type TodoStore = {
   list: Array<Todo>;
@@ -15,9 +15,9 @@ type TodoStore = {
 
 export type TodoAggregated = Todo & { user: User | null; favorite: boolean };
 
-const STORAGE_KEY = "todo-favorites";
+const STORAGE_KEY = 'todo-favorites';
 
-export const useTodosStore = defineStore("TodosStore", {
+export const useTodosStore = defineStore('TodosStore', {
   state: (): TodoStore => {
     return {
       list: [],
@@ -36,7 +36,6 @@ export const useTodosStore = defineStore("TodosStore", {
         favorite: this.favorites.has(todo.id),
       }));
     },
-     
   },
   actions: {
     getTodos() {
@@ -44,7 +43,7 @@ export const useTodosStore = defineStore("TodosStore", {
         .getAll()
         .then(({ data, total, pages }) => {
           this.list = data;
-          data.forEach((user) => this.index.set(user.id, user));
+          data.forEach((todo) => this.index.set(todo.id, todo));
           this.total = total;
           this.pages = pages;
         })
@@ -52,6 +51,15 @@ export const useTodosStore = defineStore("TodosStore", {
           const userStore = useUsersStore();
           userStore.list.length == 0 && userStore.getUsers();
         });
+    },
+    updateTodo(id: ID, dto: UpdateTodoDto) {
+      todoService
+        .update(id, dto)
+        .then(() => {
+          const todo = this.index.get(id)
+          todo && Object.assign(todo, dto)
+
+        })
     },
     addFavorite(id: ID) {
       this.favorites.add(id);
@@ -70,10 +78,7 @@ export const useTodosStore = defineStore("TodosStore", {
       } catch {}
     },
     saveFavorite() {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify([...this.favorites.keys()])
-      );
+      localStorage.setItem(STORAGE_KEY, JSON.stringify([...this.favorites.keys()]));
     },
   },
 });

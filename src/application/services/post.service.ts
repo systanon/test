@@ -28,25 +28,25 @@ export class PostService {
   }
 
   async getAll({ offset = OFFSET, limit = LIMIT }: GetAllParams = <GetAllParams>{}): Promise<Pagination<Post>> {
-    var url = '/posts' + '?' + qs.stringify({ offset, limit })
+    const url = '/posts' + '?' + qs.stringify({ offset, limit })
     const response = await this.client.jsonDo<Array<Post>>(url)
     return getPaginationFromResponse(response, limit)
   }
 
   async getOne(id: ID): Promise<Post> {
-    var url = '/posts/' + id
+    const url = '/posts/' + id
     const response = await this.client.jsonDo<Post>(url)
     return response.body
   }
 
   async create(dto: CreatePostDto): Promise<ID> {
-    var url = '/posts'
+    const url = '/posts'
     const response = await this.client.jsonDo<Post>(url, { method: 'POST', body: dto })
     return response.body.id
   }
 
   async update(dto: UpdatePostDto): Promise<ID> {
-    var url = '/posts'
+    const url = '/posts'
     const response = await this.client.jsonDo<Post>(url, { method: 'PATCH', body: dto })
     return response.body.id
   }
